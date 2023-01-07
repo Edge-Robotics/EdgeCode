@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -16,20 +17,16 @@ import java.util.*;
 @Autonomous(name = "Claw")
 public class Claw {
 
-    private DcMotor frontleft;
-    private DcMotor frontright;
-    private DcMotor backright;
-    private DcMotor backleft;
-
-    private Servo leftServo;
-    private Servo rightServo;
-
+    private CRServo leftServo;
+    private CRServo rightServo;
 
     public void init(HardwareMap hardwareMap) {
-        frontleft = hardwareMap.get(DcMotor.class, "frontleft");
-        frontright = hardwareMap.get(DcMotor.class, "frontright");
-        backright = hardwareMap.get(DcMotor.class, "backright");
-        backleft = hardwareMap.get(DcMotor.class, "backleft");
+        leftServo = hardwareMap.get(CRServo.class, "leftServo");
+        rightServo = hardwareMap.get(CRServo.class, "rightServo");
+    }
+    public void setIntakePower(double power){
+        leftServo.setPower(-power);
+        rightServo.setPower(power);
     }
 
 
