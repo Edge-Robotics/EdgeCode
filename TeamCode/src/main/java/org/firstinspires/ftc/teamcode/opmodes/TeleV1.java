@@ -19,7 +19,7 @@ public class TeleV1 extends LinearOpMode {
     private DcMotor backleft = null;
     private DcMotor backright = null;
     private Claw mainClaw = new Claw();
-    private Mechanum mainMecanum = new Mechanum();
+    private Mechanum mainMechanum = new Mechanum();
 
     @Override
     public void runOpMode() {
@@ -33,6 +33,7 @@ public class TeleV1 extends LinearOpMode {
             backright.setPower(((gamepad1.right_stick_y * -1 + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.75);
             backleft.setPower(((gamepad1.right_stick_y + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.75);
             mainClaw.setIntakePower(gamepad1.right_stick_y);
+            //if (button 'A' is pressed), setTargetPosition(double bottomPos)
 
             telemetry.update();
         }
