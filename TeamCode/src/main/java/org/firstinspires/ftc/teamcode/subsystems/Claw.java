@@ -14,7 +14,7 @@ import java.util.*;
 //import com.qualcomm.robotcore.hardware.opmode;
 //import com.qualcomm.robotcore.hardware.opmode.Autonomous;
 
-@Autonomous(name = "Claw")
+
 public class Claw {
 
     private CRServo leftServo;

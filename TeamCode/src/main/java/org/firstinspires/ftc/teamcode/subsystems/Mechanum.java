@@ -14,19 +14,18 @@ import java.util.*;
 //import com.qualcomm.robotcore.hardware.opmode;
 //import com.qualcomm.robotcore.hardware.opmode.Autonomous;
 
-@Autonomous(name = "Mechanum")
 public class Mechanum {
 
-    private DcMotor frontleft;
-    private DcMotor frontright;
-    private DcMotor backright;
-    private DcMotor backleft;
+    private DcMotor frontLeft;
+    private DcMotor frontRight;
+    private DcMotor backRight;
+    private DcMotor backLeft;
 
     public void init(HardwareMap hardwareMap) {
-        frontleft = hardwareMap.get(DcMotor.class, "frontleft");
-        frontright = hardwareMap.get(DcMotor.class, "frontright");
-        backright = hardwareMap.get(DcMotor.class, "backright");
-        backleft = hardwareMap.get(DcMotor.class, "backleft");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontleft");
+        frontRight = hardwareMap.get(DcMotor.class, "frontright");
+        backRight = hardwareMap.get(DcMotor.class, "backright");
+        backLeft = hardwareMap.get(DcMotor.class, "backleft");
     }
 
 

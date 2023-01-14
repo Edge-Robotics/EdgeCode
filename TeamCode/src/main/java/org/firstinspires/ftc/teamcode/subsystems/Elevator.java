@@ -15,15 +15,12 @@ import java.util.*;
 //import com.qualcomm.robotcore.hardware.opmode;
 //import com.qualcomm.robotcore.hardware.opmode.Autonomous;
 
-@Autonomous(name = "Elevator")
 public class Elevator {
 
     private DcMotorEx elevatorLeft;
     private DcMotorEx elevatorRight;
     double leftPower;
     double rightPower;
-    double bottomPosition = 0;
-    double topPosition = 69;
 
     public void init(HardwareMap hardwareMap) {
         elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft"); //rename in hardware map
@@ -32,12 +29,13 @@ public class Elevator {
         elevatorLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         elevatorRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+        elevatorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevatorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
     }
 
     public void setTargetPosition(double target){
-        elevatorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        elevatorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        double currentPos = elevatorLeft.getCurrentPosition();
+        int currentPos = elevatorLeft.getCurrentPosition();
 
         if (currentPos < target) {
             // Going up
@@ -59,7 +57,7 @@ public class Elevator {
         elevatorRight.setPower(rightPower);
     }
 
-    public double get_lift_position(){
+    public int get_lift_position(){
         return elevatorLeft.getCurrentPosition();
     }
 
