@@ -59,45 +59,60 @@ public class TeleV1 extends LinearOpMode {
             telemetry.addData("Front Right: ", frontRight.getCurrentPosition());
             telemetry.addData("Back Left: ", backLeft.getCurrentPosition());
             telemetry.addData("Back Right: ", backRight.getCurrentPosition());
-            frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.75);
-            frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.75);
-            backRight.setPower(((gamepad1.left_stick_y * -1 + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.75);
-            backLeft.setPower(((gamepad1.left_stick_y + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.75);
-            mainClaw.setIntakePower(0.1);
+            telemetry.addData("left stick y", gamepad1.left_stick_y);
+            telemetry.addData("left stick x", gamepad1.left_stick_x);
+            telemetry.addData("right stick x", gamepad1.right_stick_x);
 
-            if (gamepad1.dpad_up){
-                mainElevator.setTargetPosition(topPosition);
-            }
+            telemetry.addData("Code uploaded", "yes");
 
-            if (gamepad1.dpad_down){
-                mainElevator.setTargetPosition(bottomPosition);
-                //elevatorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                //elevatorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            }
+            while (!isStopRequested()) {
+                // Translation
+                if (Math.abs(gamepad1.left_stick_y) > 0.3 || Math.abs(gamepad1.left_stick_x) > 0.3 || Math.abs(gamepad1.right_stick_x) > 0.3) {
+                    frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.75);
+                    frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.75);
+                    backRight.setPower(((gamepad1.left_stick_y * -1 + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.75);
+                    backLeft.setPower(((gamepad1.left_stick_y + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.75);
+                } else {
+                    frontLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    backLeft.setPower(0);
+                }
 
-            if (gamepad1.dpad_right){
-                mainElevator.setTargetPosition(midPosition);
-            }
+                //mainClaw.setIntakePower(0.1);1
 
-            if (gamepad1.dpad_left){
-                mainElevator.setTargetPosition(slightPosition);
-            }
+                if (gamepad1.dpad_up) {
+                    mainElevator.setTargetPosition(topPosition);
+                }
+
+                if (gamepad1.dpad_down) {
+                    mainElevator.setTargetPosition(bottomPosition);
+                    //elevatorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    //elevatorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                }
+
+                if (gamepad1.dpad_right) {
+                    mainElevator.setTargetPosition(midPosition);
+                }
+
+                if (gamepad1.dpad_left) {
+                    mainElevator.setTargetPosition(slightPosition);
+                }
 
 
-            if (gamepad1.a){
-                mainClaw.setIntakePower(-1);
-            }
-            else {
-                mainClaw.setIntakePower(0);
-            }
+                if (gamepad1.a) {
+                    mainClaw.setIntakePower(-1);
+                } else {
+                    mainClaw.setIntakePower(0);
+                }
 
-            if (gamepad1.b){
-                mainClaw.setIntakePower(1);
-            }
-            else {
-                mainClaw.setIntakePower(0);
-            }
+                if (gamepad1.b) {
+                    mainClaw.setIntakePower(1);
+                } else {
+                    mainClaw.setIntakePower(0);
+                }
 
-            telemetry.update();
+                telemetry.update();
+            }
         }
     }}
