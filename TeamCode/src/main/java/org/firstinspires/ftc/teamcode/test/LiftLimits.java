@@ -1,3 +1,5 @@
+//Property of FTC Team 22346 - All External users must request permission to access and utilize code
+//Authors: Stanley H.
 package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

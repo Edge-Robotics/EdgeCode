@@ -1,3 +1,5 @@
+//Property of FTC Team 22346 - All External users must request permission to access and utilize code
+//Authors: Stanley H.
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,7 +25,7 @@ public class Elevator {
     double rightPower;
 
     public void init(HardwareMap hardwareMap) {
-        elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft"); //rename in hardware map
+        elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft");
         elevatorRight = hardwareMap.get(DcMotorEx.class, "elevatorRight");
 
         elevatorLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -44,8 +46,7 @@ public class Elevator {
         } else if (currentPos > target) {
             // Going down
             leftPower = -0.5;
-            rightPower = 0.5;
-        }
+            rightPower = 0.5;}
 
         elevatorLeft.setTargetPosition((int) target);
         elevatorRight.setTargetPosition((int) -target);
