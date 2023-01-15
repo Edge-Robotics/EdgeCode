@@ -31,9 +31,9 @@ public class TeleV1 extends LinearOpMode {
     private Mechanum mainMechanum = new Mechanum();
     private Elevator mainElevator = new Elevator();
     double bottomPosition = 0;
-    double slightPosition = 50;
-    double midPosition = 2000;
-    double topPosition = 2750;
+    double slightPosition = 65;
+    double midPosition = 2030;
+    double topPosition = 2780;
 
 
     @Override
@@ -79,10 +79,11 @@ public class TeleV1 extends LinearOpMode {
                     backLeft.setPower(0);
                 }
 
-                //mainClaw.setIntakePower(0.1);1
-
                 if (gamepad1.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
+                    slightPosition += 15;
+                    midPosition += 15;
+                    topPosition += 15;
                 }
 
                 if (gamepad1.dpad_down) {
@@ -100,13 +101,13 @@ public class TeleV1 extends LinearOpMode {
                 }
 
 
-                if (gamepad1.a) {
+                if (gamepad1.right_trigger > 0.8) {
                     mainClaw.setIntakePower(-1);
                 } else {
                     mainClaw.setIntakePower(0);
                 }
 
-                if (gamepad1.b) {
+                if (gamepad1.right_bumper) {
                     mainClaw.setIntakePower(1);
                 } else {
                     mainClaw.setIntakePower(0);
