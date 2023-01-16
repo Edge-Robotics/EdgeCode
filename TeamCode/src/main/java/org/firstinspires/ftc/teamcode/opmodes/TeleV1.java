@@ -33,7 +33,7 @@ public class TeleV1 extends LinearOpMode {
     double bottomPosition = 0;
     double slightPosition = 65;
     double midPosition = 2030;
-    double topPosition = 2780;
+    double topPosition = 2790;
 
 
     @Override
@@ -81,15 +81,13 @@ public class TeleV1 extends LinearOpMode {
 
                 if (gamepad1.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
-                    slightPosition += 15;
-                    midPosition += 15;
-                    topPosition += 15;
+                    slightPosition += 17;
+                    midPosition += 17;
+                    topPosition += 17;
                 }
 
                 if (gamepad1.dpad_down) {
                     mainElevator.setTargetPosition(bottomPosition);
-                    //elevatorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    //elevatorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 }
 
                 if (gamepad1.dpad_right) {
@@ -111,6 +109,15 @@ public class TeleV1 extends LinearOpMode {
                     mainClaw.setIntakePower(1);
                 } else {
                     mainClaw.setIntakePower(0);
+                }
+
+                while (gamepad1.left_trigger > 0.3) {
+                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()-(20 * gamepad1.left_trigger));
+                }
+
+                while (gamepad1.left_bumper) {
+                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()+10);
+
                 }
 
                 telemetry.update();
