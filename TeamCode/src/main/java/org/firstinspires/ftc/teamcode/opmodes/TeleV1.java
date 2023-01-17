@@ -2,14 +2,10 @@
 //Authors: Stanley H.
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
@@ -100,16 +96,17 @@ public class TeleV1 extends LinearOpMode {
 
 
                 if (gamepad1.right_trigger > 0.8) {
-                    mainClaw.setIntakePower(-1);
+                    mainClaw.intake();
                 } else {
                     mainClaw.setIntakePower(0);
                 }
 
                 if (gamepad1.right_bumper) {
-                    mainClaw.setIntakePower(1);
+                    mainClaw.outTake();
                 } else {
                     mainClaw.setIntakePower(0);
                 }
+
 
                 while (gamepad1.left_trigger > 0.3) {
                     mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()-(30 * gamepad1.left_trigger));
