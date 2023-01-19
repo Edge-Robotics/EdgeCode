@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //import com.qualcomm.robotcore.hardware.opmode.Autonomous;
 
 
-public class Claw {
+public class Intake {
 
     private CRServo leftServo;
     private CRServo rightServo;

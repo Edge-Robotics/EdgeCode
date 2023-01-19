@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.Mechanum;
 
@@ -23,7 +23,7 @@ public class TeleV1 extends LinearOpMode {
     private DcMotor backRight = null;
     private DcMotorEx elevatorLeft = null;
     private DcMotorEx elevatorRight = null;
-    private Claw mainClaw = new Claw();
+    private Intake mainClaw = new Intake();
     private Mechanum mainMechanum = new Mechanum();
     private Elevator mainElevator = new Elevator();
     double bottomPosition = 0;
@@ -84,6 +84,8 @@ public class TeleV1 extends LinearOpMode {
 
                 if (gamepad1.dpad_down) {
                     mainElevator.setTargetPosition(bottomPosition);
+                    elevatorLeft.setPower(0);
+                    elevatorRight.setPower(0);
                 }
 
                 if (gamepad1.dpad_right) {
