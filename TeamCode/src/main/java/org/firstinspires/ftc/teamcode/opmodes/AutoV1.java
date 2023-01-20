@@ -70,18 +70,29 @@ public class AutoV1 extends LinearOpMode {
                 telemetry.addData("Back Right: ", backRight.getCurrentPosition());
                 telemetry.addData("Code uploaded", "yes");
 
-                mainAutoMechanum.driveForward(1000,500);
+                mainAutoMechanum.driveForward(200,500);
                 sleep(500);
-                mainAutoMechanum.driveBackward(1000,500);
+                mainAutoMechanum.driveBackward(200,500);
                 sleep(500);
-                mainAutoMechanum.turnLeft(1000,500); // MAKE FUNCTION FOR 90 DEGREE TURNS (OR TURNS OF X DEGREES IN GENERAL)
+                mainAutoMechanum.turnLeft(200,500); // MAKE FUNCTION FOR 90 DEGREE TURNS (OR TURNS OF X DEGREES IN GENERAL)
                 sleep(500);
-                mainAutoMechanum.turnRight(1000,500);
+                mainAutoMechanum.turnRight(200,500);
                 sleep(500);
-                mainAutoMechanum.strafeLeft(1000,500);
+                mainAutoMechanum.strafeLeft(200,500);
                 sleep(500);
-                mainAutoMechanum.strafeRight(1000,500);
+                mainAutoMechanum.strafeRight(200,500);
                 sleep(500);
+                mainElevator.setTargetPosition(topPosition);
+                sleep(500);
+                mainElevator.setTargetPosition(bottomPosition);
+                sleep(500);
+                mainClaw.intake();
+                sleep(500);
+                mainClaw.setIntakePower(0);
+                sleep(500);
+                mainClaw.outTake();
+                mainClaw.setIntakePower(0);
+
 
 
             }

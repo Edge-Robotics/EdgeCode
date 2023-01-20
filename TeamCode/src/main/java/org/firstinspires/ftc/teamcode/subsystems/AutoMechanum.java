@@ -90,34 +90,34 @@ public class AutoMechanum {
     public void turnRight(double target, double power){
         power /= 1000;
         setTargetPositionFrontLeft(target, -power); //FOR ALL BELOW -- CHANGE THESE
-        setTargetPositionFrontRight(target, -power);
+        setTargetPositionFrontRight(target, power);
         setTargetPositionBackLeft(target, -power);
-        setTargetPositionBackRight(target, -power);
+        setTargetPositionBackRight(target, power);
 
     }
 
     public void turnLeft(double target, double power){
         power /= 1000;
-        setTargetPositionFrontLeft(target, -power);
+        setTargetPositionFrontLeft(target, power);
         setTargetPositionFrontRight(target, -power);
-        setTargetPositionBackLeft(target, -power);
+        setTargetPositionBackLeft(target, power);
         setTargetPositionBackRight(target, -power);
     }
 
     public void strafeRight(double target, double power){
         power /= 1000;
         setTargetPositionFrontLeft(target, -power);
-        setTargetPositionFrontRight(target, -power);
-        setTargetPositionBackLeft(target, -power);
+        setTargetPositionFrontRight(target, power);
+        setTargetPositionBackLeft(target, power);
         setTargetPositionBackRight(target, -power);
     }
 
     public void strafeLeft(double target, double power){
         power /= 1000;
-        setTargetPositionFrontLeft(target, -power);
+        setTargetPositionFrontLeft(target, power);
         setTargetPositionFrontRight(target, -power);
         setTargetPositionBackLeft(target, -power);
-        setTargetPositionBackRight(target, -power);
+        setTargetPositionBackRight(target, power);
     }
 
 

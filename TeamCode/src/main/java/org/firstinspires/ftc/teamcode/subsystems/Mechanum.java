@@ -24,10 +24,10 @@ public class Mechanum {
     private DcMotor backLeft;
 
     public void init(HardwareMap hardwareMap) {
-        frontLeft = hardwareMap.get(DcMotor.class, "frontleft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontright");
-        backRight = hardwareMap.get(DcMotor.class, "backright");
-        backLeft = hardwareMap.get(DcMotor.class, "backleft");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
     }
 
 
