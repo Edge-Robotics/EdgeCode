@@ -3,11 +3,16 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.SwitchableLight;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -15,6 +20,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.subsystems.Mechanum;
 import org.firstinspires.ftc.teamcode.subsystems.AutoMechanum;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 
@@ -25,6 +33,8 @@ public class AutoV1 extends LinearOpMode {
     DcMotorEx backLeft;
     DcMotorEx backRight;
     DcMotorEx frontRight;
+    ColorSensor colorSensor;
+
     private Intake mainClaw = new Intake();
     private AutoMechanum mainAutoMechanum = new AutoMechanum();
     private Elevator mainElevator = new Elevator();
@@ -36,6 +46,7 @@ public class AutoV1 extends LinearOpMode {
     double slightPosition = 55;
     double midPosition = 2020;
     double topPosition = 2780;
+
 
     public void runOpMode() {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -56,6 +67,8 @@ public class AutoV1 extends LinearOpMode {
 
         mainClaw.init(hardwareMap);
         mainElevator.init(hardwareMap);
+        colorSensor = hardwareMap.get(ColorSensor.class, "ColorSensor");
+
 
 
 
@@ -69,6 +82,9 @@ public class AutoV1 extends LinearOpMode {
                 telemetry.addData("Back Left: ", backLeft.getCurrentPosition());
                 telemetry.addData("Back Right: ", backRight.getCurrentPosition());
                 telemetry.addData("Code uploaded", "yes");
+                telemetry.addData("Red", colorSensor.red());
+                telemetry.addData("Green", colorSensor.green());
+                telemetry.addData("Blue", colorSensor.blue());
 
                 mainAutoMechanum.driveForward(200,500);
                 sleep(500);
@@ -99,13 +115,5 @@ public class AutoV1 extends LinearOpMode {
 
         }
 
-
-
-
-
-
-
         runtime.reset();
-
-
     }}

@@ -6,10 +6,25 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.Mechanum;
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
+import com.qualcomm.robotcore.hardware.SwitchableLight;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @TeleOp(name="TeleV1", group="TeleOp")
@@ -26,6 +41,7 @@ public class TeleV1 extends LinearOpMode {
     private Intake mainClaw = new Intake();
     private Mechanum mainMechanum = new Mechanum();
     private Elevator mainElevator = new Elevator();
+    private NormalizedColorSensor MainColorSensor;
     double bottomPosition = 0;
     double slightPosition = 55;
     double midPosition = 2020;
@@ -40,6 +56,7 @@ public class TeleV1 extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft");
         elevatorRight = hardwareMap.get(DcMotorEx.class, "elevatorRight");
+        MainColorSensor = hardwareMap.get(NormalizedColorSensor.class, "ColorSensor");
 
         waitForStart();
         mainClaw.init(hardwareMap);
@@ -58,6 +75,7 @@ public class TeleV1 extends LinearOpMode {
             telemetry.addData("left stick y", gamepad1.left_stick_y);
             telemetry.addData("left stick x", gamepad1.left_stick_x);
             telemetry.addData("right stick x", gamepad1.right_stick_x);
+
 
             telemetry.addData("Code uploaded", "yes");
 
