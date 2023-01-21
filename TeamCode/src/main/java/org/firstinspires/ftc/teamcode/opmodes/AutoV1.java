@@ -47,6 +47,10 @@ public class AutoV1 extends LinearOpMode {
     double midPosition = 2020;
     double topPosition = 2780;
 
+    boolean yellow = false;
+    boolean magenta = false;
+    boolean cyan = false;
+
 
     public void runOpMode() {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -85,29 +89,56 @@ public class AutoV1 extends LinearOpMode {
                 telemetry.addData("Red", colorSensor.red());
                 telemetry.addData("Green", colorSensor.green());
                 telemetry.addData("Blue", colorSensor.blue());
+                yellow = false;
+                magenta = false;
+                cyan = false;
 
-                mainAutoMechanum.driveForward(200,500);
-                sleep(500);
-                mainAutoMechanum.driveBackward(200,500);
-                sleep(500);
-                mainAutoMechanum.turnLeft(200,500); // MAKE FUNCTION FOR 90 DEGREE TURNS (OR TURNS OF X DEGREES IN GENERAL)
-                sleep(500);
-                mainAutoMechanum.turnRight(200,500);
-                sleep(500);
-                mainAutoMechanum.strafeLeft(200,500);
-                sleep(500);
-                mainAutoMechanum.strafeRight(200,500);
-                sleep(500);
-                mainElevator.setTargetPosition(topPosition);
-                sleep(500);
-                mainElevator.setTargetPosition(bottomPosition);
-                sleep(500);
-                mainClaw.intake();
-                sleep(500);
-                mainClaw.setIntakePower(0);
-                sleep(500);
-                mainClaw.outTake();
-                mainClaw.setIntakePower(0);
+//                mainAutoMechanum.driveForward(200,500);
+//                sleep(500);
+//                mainAutoMechanum.driveBackward(200,500);
+//                sleep(500);
+//                mainAutoMechanum.turnLeft(200,500); // MAKE FUNCTION FOR 90 DEGREE TURNS (OR TURNS OF X DEGREES IN GENERAL)
+//                sleep(500);
+//                mainAutoMechanum.turnRight(200,500);
+//                sleep(500);
+//                mainAutoMechanum.strafeLeft(200,500);
+//                sleep(500);
+//                mainAutoMechanum.strafeRight(200,500);
+//                sleep(500);
+//                mainElevator.setTargetPosition(topPosition);
+//                sleep(500);
+//                mainElevator.setTargetPosition(bottomPosition);
+//                sleep(500);
+//                mainClaw.intake();
+//                sleep(500);
+//                mainClaw.setIntakePower(0);
+//                sleep(500);
+//                mainClaw.outTake();
+               // mainClaw.setIntakePower(0);
+                if (colorSensor.green() > colorSensor.blue() && colorSensor.green() > colorSensor.red() && colorSensor.green() - colorSensor.blue() > 0.05 && colorSensor.green() - colorSensor.red() > 0.05){
+                    yellow = true;
+                }
+                else if (colorSensor.blue() > colorSensor.red() && colorSensor.green() > colorSensor.red() && colorSensor.blue() - colorSensor.red() > 0.05){
+                    cyan = true;
+                }
+                else if (Math.abs(colorSensor.blue() - colorSensor.red()) < 0.06 && Math.abs(colorSensor.red() - colorSensor.green()) < 0.06 && Math.abs(colorSensor.green() - colorSensor.blue()) > 0.06){
+                    magenta = true;
+                }
+
+                if (yellow){
+                    telemetry.addData("Current Color Detected", "Yellow");
+                }
+                else if (cyan){
+                    telemetry.addData("Current Color Detected", "Cyan");
+                }
+                else if (magenta){
+                    telemetry.addData("Current Color Detected", "Magenta");
+                }
+                else{
+                    telemetry.addData("Current Color Detected", "Unknown");
+                }
+
+                //break;
 
 
 
