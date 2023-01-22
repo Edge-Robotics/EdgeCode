@@ -44,7 +44,7 @@ public class TeleV1 extends LinearOpMode {
     private Elevator mainElevator = new Elevator();
     private NormalizedColorSensor MainColorSensor;
     double bottomPosition = 0;
-    double slightPosition = 55;
+    double slightPosition = 300;
     double midPosition = 2020;
     double topPosition = 2780;
 
@@ -127,26 +127,24 @@ public class TeleV1 extends LinearOpMode {
 
 
                 if (gamepad1.right_trigger > 0.3) {
-                    mainClaw.intake();
-
+                    mainClaw.outTake();
                 } else {
                     mainClaw.updateIntake();
                 }
 
                 if (gamepad1.right_bumper) {
-                    mainClaw.outTake();
-
+                    mainClaw.intake();
                 } else {
                     mainClaw.updateIntake();
                 }
 
 
                 while (gamepad1.left_trigger > 0.3) {
-                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()-(40 * gamepad1.left_trigger));
+                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()-(45 * gamepad1.left_trigger));
                 }
 
                 while (gamepad1.left_bumper) {
-                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()+20);
+                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()+30);
 
                 }
 
