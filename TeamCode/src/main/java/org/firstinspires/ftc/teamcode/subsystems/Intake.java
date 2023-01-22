@@ -43,11 +43,11 @@ public class Intake {
     }
 
     public void updateIntake(){
-        if (intakeWasCalled && timer.seconds() > .25){
+        if (intakeWasCalled && timer.seconds() > .1){
             setIntakePower(0);
             intakeWasCalled = false;
         }
-        else if (outtakeWasCalled && timer.seconds() > .25){
+        else if (outtakeWasCalled && timer.seconds() > .1){
             setIntakePower(0);
             outtakeWasCalled = false;
         }

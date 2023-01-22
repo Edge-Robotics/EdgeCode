@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -41,6 +42,8 @@ public class AutoV1 extends LinearOpMode {
     private DcMotorEx elevatorLeft = null;
     private DcMotorEx elevatorRight = null;
     private ElapsedTime runtime = new ElapsedTime();
+    private
+
 
     double bottomPosition = 0;
     double slightPosition = 55;
@@ -93,7 +96,28 @@ public class AutoV1 extends LinearOpMode {
                 magenta = false;
                 cyan = false;
 
-//                mainAutoMechanum.driveForward(200,500);
+                mainClaw.setIntakePower(1);
+                sleep(500);
+                mainClaw.setIntakePower(0);
+                sleep(500);
+                mainElevator.setTargetPosition(slightPosition);
+                sleep(500);
+                mainAutoMechanum.driveForward(200,500);
+                mainAutoMechanum.brake();
+                sleep(500);
+                mainElevator.setTargetPosition(topPosition);
+                sleep(500);
+                mainAutoMechanum.driveForward(50,100);
+                sleep(500);
+                mainClaw.setIntakePower(-1);
+                sleep(500);
+                mainClaw.setIntakePower(0);
+                sleep(500);
+                mainAutoMechanum.driveBackward(100,200);
+                sleep(500);
+                mainElevator.setTargetPosition(bottomPosition);
+
+
 //                sleep(500);
 //                mainAutoMechanum.driveBackward(200,500);
 //                sleep(500);

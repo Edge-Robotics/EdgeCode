@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -57,6 +58,10 @@ public class TeleV1 extends LinearOpMode {
         elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft");
         elevatorRight = hardwareMap.get(DcMotorEx.class, "elevatorRight");
         MainColorSensor = hardwareMap.get(NormalizedColorSensor.class, "ColorSensor");
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
         mainClaw.init(hardwareMap);
@@ -66,7 +71,7 @@ public class TeleV1 extends LinearOpMode {
         mainElevator.setTargetPosition(bottomPosition);
 
         while (opModeIsActive()) {
-            telemetry.addData("Robot Status", "Initialized");
+            telemetry.addData("NEW ROBOT UPLOADING?!!!", "Initialized");
             telemetry.addData("Elevator Position: ", elevatorLeft.getCurrentPosition());
             telemetry.addData("Front Left: ", frontLeft.getCurrentPosition());
             telemetry.addData("Front Right: ", frontRight.getCurrentPosition());
@@ -75,17 +80,24 @@ public class TeleV1 extends LinearOpMode {
             telemetry.addData("left stick y", gamepad1.left_stick_y);
             telemetry.addData("left stick x", gamepad1.left_stick_x);
             telemetry.addData("right stick x", gamepad1.right_stick_x);
-
+            telemetry.addData("A", gamepad1.a);
+            telemetry.addData("B", gamepad1.b);
+            telemetry.addData("X", gamepad1.x);
+            telemetry.addData("Y", gamepad1.y);
+            telemetry.addData("Right Trigger", gamepad1.right_trigger);
+            telemetry.addData("Right Bumper", gamepad1.right_bumper);
+            telemetry.addData("Left Trigger", gamepad1.left_trigger);
+            telemetry.addData("Left Bumper", gamepad1.left_bumper);
 
             telemetry.addData("Code uploaded", "yes");
 
             while (!isStopRequested()) {
                 // Translation
-                if (Math.abs(gamepad1.left_stick_y) > 0.3 || Math.abs(gamepad1.left_stick_x) > 0.3 || Math.abs(gamepad1.right_stick_x) > 0.3) {
-                    frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 2);
-                    frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 2);
-                    backRight.setPower(((gamepad1.left_stick_y * -1 + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 2);
-                    backLeft.setPower(((gamepad1.left_stick_y + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 2);
+                if (Math.abs(gamepad1.left_stick_y) > 0.35 || Math.abs(gamepad1.left_stick_x) > 0.35 || Math.abs(gamepad1.right_stick_x) > 0.35) {
+                    frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.5);
+                    frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.5);
+                    backRight.setPower(((gamepad1.left_stick_y * -1 + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.5);
+                    backLeft.setPower(((gamepad1.left_stick_y + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.5);
                 } else {
                     frontLeft.setPower(0);
                     frontRight.setPower(0);
@@ -95,15 +107,14 @@ public class TeleV1 extends LinearOpMode {
 
                 if (gamepad1.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
-                    slightPosition += 12;
-                    midPosition += 12;
-                    topPosition += 12;
+                    slightPosition += 7;
+                    midPosition += 7;
+                    topPosition += 7;
+                    bottomPosition -= 7;
                 }
 
                 if (gamepad1.dpad_down) {
                     mainElevator.setTargetPosition(bottomPosition);
-                    elevatorLeft.setPower(0);
-                    elevatorRight.setPower(0);
                 }
 
                 if (gamepad1.dpad_right) {
@@ -115,25 +126,27 @@ public class TeleV1 extends LinearOpMode {
                 }
 
 
-                if (gamepad1.right_trigger > 0.8) {
+                if (gamepad1.right_trigger > 0.3) {
                     mainClaw.intake();
+
                 } else {
-                    mainClaw.setIntakePower(0);
+                    mainClaw.updateIntake();
                 }
 
                 if (gamepad1.right_bumper) {
                     mainClaw.outTake();
+
                 } else {
-                    mainClaw.setIntakePower(0);
+                    mainClaw.updateIntake();
                 }
 
 
                 while (gamepad1.left_trigger > 0.3) {
-                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()-(30 * gamepad1.left_trigger));
+                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()-(40 * gamepad1.left_trigger));
                 }
 
                 while (gamepad1.left_bumper) {
-                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()+10);
+                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()+20);
 
                 }
 

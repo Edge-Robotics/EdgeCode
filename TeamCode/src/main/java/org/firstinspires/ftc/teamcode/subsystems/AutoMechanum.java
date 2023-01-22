@@ -39,10 +39,10 @@ public class AutoMechanum {
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 
-//        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-//        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-//        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-//        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 //
 //        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 //        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -81,6 +81,7 @@ public class AutoMechanum {
 
     public void driveBackward(double target, double power){
         power /= 1000;
+
         setTargetPositionFrontLeft(target, -power);
         setTargetPositionFrontRight(target, -power);
         setTargetPositionBackLeft(target, -power);
@@ -120,6 +121,12 @@ public class AutoMechanum {
         setTargetPositionBackRight(target, power);
     }
 
+    public void brake(){
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
 
 
 }

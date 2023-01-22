@@ -42,8 +42,8 @@ public class Elevator {
 
         if (currentPos < target) {
             // Going up
-            leftPower = 0.75;
-            rightPower = -0.75;
+            leftPower = 0.65;
+            rightPower = -0.65;
         } else if (currentPos > target) {
             // Going down
             leftPower = -0.3;
