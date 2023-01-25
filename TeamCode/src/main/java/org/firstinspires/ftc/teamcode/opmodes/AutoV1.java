@@ -91,6 +91,7 @@ public class AutoV1 extends LinearOpMode {
 
         mainClaw.init(hardwareMap);
         mainElevator.init(hardwareMap);
+        mainAutoMechanum.init(hardwareMap);
 
         colorSensor = hardwareMap.get(ColorSensor.class, "ColorSensor");
 
