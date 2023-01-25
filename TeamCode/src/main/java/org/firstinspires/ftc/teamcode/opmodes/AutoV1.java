@@ -43,10 +43,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @Autonomous(name="AutoV1", group="AutoOp")
 
 public class AutoV1 extends LinearOpMode {
-    DcMotor frontLeft;
-    DcMotor backLeft;
-    DcMotor backRight;
-    DcMotor frontRight;
+    DcMotorEx frontLeft;
+    DcMotorEx backLeft;
+    DcMotorEx backRight;
+    DcMotorEx frontRight;
     ColorSensor colorSensor;
 
     private Intake mainClaw = new Intake();
@@ -70,21 +70,24 @@ public class AutoV1 extends LinearOpMode {
 
 
     public void runOpMode() {
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        //frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //frontLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft");
+        elevatorRight = hardwareMap.get(DcMotorEx.class, "elevatorRight");
 
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        //frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //frontRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-       // backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //backLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+        backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
+        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");{
-        //backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //backRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         mainClaw.init(hardwareMap);
         mainElevator.init(hardwareMap);
@@ -93,8 +96,9 @@ public class AutoV1 extends LinearOpMode {
 
 
 
-
+            mainElevator.setTargetPosition(bottomPosition);
             waitForStart();
+
             while (opModeIsActive()) {
 
 
