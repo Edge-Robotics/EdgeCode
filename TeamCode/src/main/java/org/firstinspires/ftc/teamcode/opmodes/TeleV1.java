@@ -57,7 +57,7 @@ public class TeleV1 extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft");
         elevatorRight = hardwareMap.get(DcMotorEx.class, "elevatorRight");
-        MainColorSensor = hardwareMap.get(NormalizedColorSensor.class, "ColorSensor");
+        //MainColorSensor = hardwareMap.get(NormalizedColorSensor.class, "ColorSensor");
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
