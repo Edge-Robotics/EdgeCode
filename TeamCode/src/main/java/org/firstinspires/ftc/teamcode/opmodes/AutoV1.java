@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.AutoMechanum;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
 
 
 @Autonomous(name = "AutoV1", group = "AutoOp")
@@ -29,16 +30,16 @@ public class AutoV1 extends LinearOpMode {
     boolean magenta = false;
     boolean cyan = false;
     boolean reset = false;
-    private final Intake mainClaw = new Intake();
+    private Servo leftServo = null;
+    private Servo rightServo = null;
+    private final Claw mainClaw = new Claw();
     private final AutoMechanum mainAutoMechanum = new AutoMechanum();
-    //private final Elevator mainElevator = new Elevator();
-    //private DcMotorEx elevatorLeft = null;
-    //private DcMotorEx elevatorRight = null;
+    private final Elevator mainElevator = new Elevator();
+    private DcMotorEx elevator = null;
     private final ElapsedTime timer = new ElapsedTime();
 
     public void runOpMode() {
-        //elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft");
-        //elevatorRight = hardwareMap.get(DcMotorEx.class, "elevatorRight");
+        elevator = hardwareMap.get(DcMotorEx.class, "elevator");
 
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -53,34 +54,48 @@ public class AutoV1 extends LinearOpMode {
         backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
-        {
-            backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-            mainClaw.init(hardwareMap);
-            //mainElevator.init(hardwareMap);
-            mainAutoMechanum.init(hardwareMap);
+        mainClaw.init(hardwareMap);
+        mainElevator.init(hardwareMap);
+        mainAutoMechanum.init(hardwareMap);
 
-            colorSensor = hardwareMap.get(ColorSensor.class, "ColorSensor");
+        colorSensor = hardwareMap.get(ColorSensor.class, "ColorSensor");
 
 
-            //mainElevator.setTargetPosition(bottomPosition);
-            //waitForStart();
+            mainElevator.setTargetPosition(bottomPosition);
+            waitForStart();
 
             while (opModeIsActive()) {
-            telemetry.addData("Robot Status", "Initialized");
-            //telemetry.addData("Elevator Position: ", elevatorLeft.getCurrentPosition());
-            telemetry.addData("Front Left: ", frontLeft.getCurrentPosition());
-            telemetry.addData("Front Right: ", frontRight.getCurrentPosition());
-            telemetry.addData("Back Left: ", backLeft.getCurrentPosition());
-            telemetry.addData("Back Right: ", backRight.getCurrentPosition());
-            telemetry.addData("Code uploaded", "yes");
-            telemetry.addData("Red", colorSensor.red());
-            telemetry.addData("Green", colorSensor.green());
-            telemetry.addData("Blue", colorSensor.blue());
-            yellow = false;
-            magenta = false;
-            cyan = false;
+                telemetry.addData("Robot", "Initialized");
+                telemetry.addData("Elevator Position: ", elevator.getCurrentPosition());
+                telemetry.addData("Front Left: ", frontLeft.getCurrentPosition());
+                telemetry.addData("Front Right: ", frontRight.getCurrentPosition());
+                telemetry.addData("Back Left: ", backLeft.getCurrentPosition());
+                telemetry.addData("Back Right: ", backRight.getCurrentPosition());
+                telemetry.addData("Elevator: ", elevator.getCurrentPosition());
+                telemetry.addData("left stick y", gamepad1.left_stick_y);
+                telemetry.addData("left stick x", gamepad1.left_stick_x);
+                telemetry.addData("right stick x", gamepad1.right_stick_x);
+                telemetry.addData("A", gamepad1.a);
+                telemetry.addData("B", gamepad1.b);
+                telemetry.addData("X", gamepad1.x);
+                telemetry.addData("Y", gamepad1.y);
+                telemetry.addData("Right Trigger", gamepad1.right_trigger);
+                telemetry.addData("Right Bumper", gamepad1.right_bumper);
+                telemetry.addData("Left Trigger", gamepad1.left_trigger);
+                telemetry.addData("Left Bumper", gamepad1.left_bumper);
+                telemetry.addData("Left Servo Position", leftServo.getPosition());
+                telemetry.addData("Right Servo Position", rightServo.getPosition());
+
+                telemetry.addData("Code uploaded", "yes");
+                telemetry.addData("Red", colorSensor.red());
+                telemetry.addData("Green", colorSensor.green());
+                telemetry.addData("Blue", colorSensor.blue());
+                yellow = false;
+                magenta = false;
+                cyan = false;
 
             //while(frontLeft.getCurrentPosition() < 1500) {
                 //mainAutoMechanum.driveForward(1500, 0.3);
@@ -119,11 +134,11 @@ public class AutoV1 extends LinearOpMode {
             mainClaw.outTake();
             mainClaw.setIntakePower(0);
 */
-            if (colorSensor.green() > colorSensor.blue() && colorSensor.green() > colorSensor.red() && colorSensor.green() - colorSensor.blue() > 0.05 && colorSensor.green() - colorSensor.red() > 0.05) {
+            if (colorSensor.green() > 3500 && colorSensor.blue() < 2500 && colorSensor.red() < 5000) {
                 yellow = true;
-            } else if (colorSensor.blue() > colorSensor.red() && colorSensor.green() > colorSensor.red() && colorSensor.blue() - colorSensor.red() > 0.05) {
+            } else if (colorSensor.blue() > 2750 && colorSensor.green() > 2750 && colorSensor.red() < 4250) {
                 cyan = true;
-            } else if (Math.abs(colorSensor.blue() - colorSensor.red()) < 0.06 && Math.abs(colorSensor.red() - colorSensor.green()) < 0.06 && Math.abs(colorSensor.green() - colorSensor.blue()) > 0.06) {
+            } else if (Math.abs(colorSensor.blue() - colorSensor.red()) < 600 && Math.abs(colorSensor.green() - colorSensor.red()) < 600) {
                 magenta = true;
             }
 
@@ -143,4 +158,4 @@ public class AutoV1 extends LinearOpMode {
 
     }
 
-}}
+}

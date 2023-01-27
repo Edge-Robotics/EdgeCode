@@ -19,50 +19,34 @@ import java.util.*;
 
 public class Elevator {
 
-    private DcMotorEx elevatorLeft;
-    private DcMotorEx elevatorRight;
+    private DcMotorEx elevator;
 
-    double leftPower;
-    double rightPower;
+    double Power;
 
     public void init(HardwareMap hardwareMap) {
-        elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft");
-        elevatorRight = hardwareMap.get(DcMotorEx.class, "elevatorRight");
-
-        elevatorLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        elevatorRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-
-        elevatorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        elevatorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        elevator = hardwareMap.get(DcMotorEx.class, "elevator");
+        elevator.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setTargetPosition(double target){
-        int currentPos = elevatorLeft.getCurrentPosition();
+        int currentPos = elevator.getCurrentPosition();
 
         if (currentPos < target) {
             // Going up
-            leftPower = 0.65;
-            rightPower = -0.65;
+            Power = 0.65;
         } else if (currentPos > target) {
             // Going down
-            leftPower = -0.3;
-            rightPower = 0.3;
+            Power = -0.3;
         }
 
-        elevatorLeft.setTargetPosition((int) target);
-        elevatorRight.setTargetPosition((int) -target);
-
-        elevatorLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        elevatorRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-        elevatorLeft.setPower(leftPower);
-        elevatorRight.setPower(rightPower);
-
+        elevator.setTargetPosition((int) target);
+        elevator.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        elevator.setPower(Power);
     }
 
     public int get_lift_position(){
-        return elevatorLeft.getCurrentPosition();
+        return elevator.getCurrentPosition();
     }
 
 

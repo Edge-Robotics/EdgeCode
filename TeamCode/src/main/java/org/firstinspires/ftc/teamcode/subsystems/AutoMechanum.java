@@ -52,31 +52,27 @@ public class AutoMechanum {
     }
 
     public void setTargetPositionFrontLeft(int target, double power){
-        frontLeft.setTargetPosition((int) target); // try using stop and reset encoder before this line
+        frontLeft.setTargetPosition(target);
         frontLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         frontLeft.setPower(power);
-        //frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setTargetPositionFrontRight(int target, double power){
-        frontRight.setTargetPosition((int) target);
+        frontRight.setTargetPosition(target);
         frontRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         frontRight.setPower(power);
-        //frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setTargetPositionBackLeft(int target, double power){
-        backLeft.setTargetPosition((int) target);
+        backLeft.setTargetPosition(target);
         backLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         backLeft.setPower(power);
-        //backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setTargetPositionBackRight(int target, double power){
-        backRight.setTargetPosition((int) target);
+        backRight.setTargetPosition(target);
         backRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         backRight.setPower(power);
-        //backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void driveForward(int target, double power){
@@ -94,7 +90,7 @@ public class AutoMechanum {
     }
 
     public void turnRight(int target, double power){
-        setTargetPositionFrontLeft(target, -power); //FOR ALL BELOW -- CHANGE THESE
+        setTargetPositionFrontLeft(target, -power);
         setTargetPositionFrontRight(target, power);
         setTargetPositionBackLeft(target, -power);
         setTargetPositionBackRight(target, power);

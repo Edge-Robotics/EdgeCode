@@ -8,9 +8,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.Mechanum;
 import android.app.Activity;
@@ -37,9 +38,10 @@ public class TeleV1 extends LinearOpMode {
     private DcMotor frontRight = null;
     private DcMotor backLeft = null;
     private DcMotor backRight = null;
-    private DcMotorEx elevatorLeft = null;
-    private DcMotorEx elevatorRight = null;
-    private Intake mainClaw = new Intake();
+    private DcMotorEx elevator = null;
+    private Servo leftServo = null;
+    private Servo rightServo = null;
+    private Claw mainClaw = new Claw();
     private Mechanum mainMechanum = new Mechanum();
     private Elevator mainElevator = new Elevator();
     private NormalizedColorSensor MainColorSensor;
@@ -55,9 +57,7 @@ public class TeleV1 extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
-        elevatorLeft = hardwareMap.get(DcMotorEx.class, "elevatorLeft");
-        elevatorRight = hardwareMap.get(DcMotorEx.class, "elevatorRight");
-        //MainColorSensor = hardwareMap.get(NormalizedColorSensor.class, "ColorSensor");
+        elevator = hardwareMap.get(DcMotorEx.class, "elevator");
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -71,12 +71,13 @@ public class TeleV1 extends LinearOpMode {
         mainElevator.setTargetPosition(bottomPosition);
 
         while (opModeIsActive()) {
-            telemetry.addData("NEW ROBOT UPLOADING?!!!", "Initialized");
-            telemetry.addData("Elevator Position: ", elevatorLeft.getCurrentPosition());
+            telemetry.addData("Robot", "Initialized");
+            telemetry.addData("Elevator Position: ", elevator.getCurrentPosition());
             telemetry.addData("Front Left: ", frontLeft.getCurrentPosition());
             telemetry.addData("Front Right: ", frontRight.getCurrentPosition());
             telemetry.addData("Back Left: ", backLeft.getCurrentPosition());
             telemetry.addData("Back Right: ", backRight.getCurrentPosition());
+            telemetry.addData("Elevator: ", elevator.getCurrentPosition());
             telemetry.addData("left stick y", gamepad1.left_stick_y);
             telemetry.addData("left stick x", gamepad1.left_stick_x);
             telemetry.addData("right stick x", gamepad1.right_stick_x);
@@ -88,6 +89,8 @@ public class TeleV1 extends LinearOpMode {
             telemetry.addData("Right Bumper", gamepad1.right_bumper);
             telemetry.addData("Left Trigger", gamepad1.left_trigger);
             telemetry.addData("Left Bumper", gamepad1.left_bumper);
+            telemetry.addData("Left Servo Position", leftServo.getPosition());
+            telemetry.addData("Right Servo Position", rightServo.getPosition());
 
             telemetry.addData("Code uploaded", "yes");
 
@@ -127,24 +130,20 @@ public class TeleV1 extends LinearOpMode {
 
 
                 if (gamepad1.right_trigger > 0.3) {
-                    mainClaw.outTake();
-                } else {
-                    mainClaw.updateIntake();
+                    mainClaw.openclaw();
                 }
 
                 if (gamepad1.right_bumper) {
-                    mainClaw.intake();
-                } else {
-                    mainClaw.updateIntake();
+                    mainClaw.closeclaw();
                 }
 
 
                 while (gamepad1.left_trigger > 0.3) {
-                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()-(45 * gamepad1.left_trigger));
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(45 * gamepad1.left_trigger));
                 }
 
                 while (gamepad1.left_bumper) {
-                    mainElevator.setTargetPosition(elevatorLeft.getCurrentPosition()+30);
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()+30);
 
                 }
 
