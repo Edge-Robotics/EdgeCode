@@ -58,6 +58,9 @@ public class TeleV1 extends LinearOpMode {
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         elevator = hardwareMap.get(DcMotorEx.class, "elevator");
+        leftServo = hardwareMap.get(Servo.class, "leftServo");
+        rightServo = hardwareMap.get(Servo.class, "rightServo");
+
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -130,11 +133,11 @@ public class TeleV1 extends LinearOpMode {
 
 
                 if (gamepad1.right_trigger > 0.3) {
-                    mainClaw.openclaw();
+                    mainClaw.openClaw();
                 }
 
                 if (gamepad1.right_bumper) {
-                    mainClaw.closeclaw();
+                    mainClaw.closeClaw();
                 }
 
 

@@ -25,12 +25,12 @@ public class Claw {
     double RightClosePos = -1;
     double RightOpenPos = 1;
 
-    public void openclaw(){
+    public void openClaw(){
         leftServo.setPosition(LeftOpenPos);
         rightServo.setPosition(RightOpenPos);
     }
 
-    public void closeclaw(){
+    public void closeClaw(){
         leftServo.setPosition(LeftClosePos);
         rightServo.setPosition(RightClosePos);
     }

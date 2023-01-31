@@ -1,7 +1,6 @@
 //Property of FTC Team 22346 - All External users must request permission to access and utilize code
 //Authors: Avaninder B., Stanley H.+++
 package org.firstinspires.ftc.teamcode.subsystems;
-
 import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -21,10 +20,10 @@ import java.util.*;
 
 public class AutoMechanum {
 
-    private DcMotorEx frontLeft;
-    private DcMotorEx frontRight;
-    private DcMotorEx backLeft;
-    private DcMotorEx backRight;
+    public static DcMotorEx frontLeft;
+    public static DcMotorEx frontRight;
+    public static DcMotorEx backLeft;
+    public static DcMotorEx backRight;
 
 
     double frontLeftPower;
@@ -42,7 +41,7 @@ public class AutoMechanum {
         frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -52,10 +51,11 @@ public class AutoMechanum {
     }
 
     public void setTargetPositionFrontLeft(int target, double power){
-        frontLeft.setTargetPosition(target);
+        frontLeft.setTargetPosition(-target);
         frontLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         frontLeft.setPower(power);
     }
+
 
     public void setTargetPositionFrontRight(int target, double power){
         frontRight.setTargetPosition(target);
@@ -64,7 +64,7 @@ public class AutoMechanum {
     }
 
     public void setTargetPositionBackLeft(int target, double power){
-        backLeft.setTargetPosition(target);
+        backLeft.setTargetPosition(-target);
         backLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         backLeft.setPower(power);
     }
@@ -76,45 +76,45 @@ public class AutoMechanum {
     }
 
     public void driveForward(int target, double power){
-        setTargetPositionFrontLeft(-target, power);
+        setTargetPositionFrontLeft(target, power);
         setTargetPositionFrontRight(target, power);
-        setTargetPositionBackLeft(-target, power);
+        setTargetPositionBackLeft(target, power);
         setTargetPositionBackRight(target, power);
     }
 
     public void driveBackward(int target, double power){
-        setTargetPositionFrontLeft(target, -power);
-        setTargetPositionFrontRight(target, -power);
-        setTargetPositionBackLeft(target, -power);
-        setTargetPositionBackRight(target, -power);
+        setTargetPositionFrontLeft(-target, power);
+        setTargetPositionFrontRight(-target, power);
+        setTargetPositionBackLeft(-target, power);
+        setTargetPositionBackRight(-target, power);
     }
 
     public void turnRight(int target, double power){
-        setTargetPositionFrontLeft(target, -power);
+        setTargetPositionFrontLeft(-target, power);
         setTargetPositionFrontRight(target, power);
-        setTargetPositionBackLeft(target, -power);
+        setTargetPositionBackLeft(-target, power);
         setTargetPositionBackRight(target, power);
 
     }
 
     public void turnLeft(int target, double power){
         setTargetPositionFrontLeft(target, power);
-        setTargetPositionFrontRight(target, -power);
+        setTargetPositionFrontRight(-target, power);
         setTargetPositionBackLeft(target, power);
-        setTargetPositionBackRight(target, -power);
+        setTargetPositionBackRight(-target, power);
     }
 
     public void strafeRight(int target, double power){
-        setTargetPositionFrontLeft(target, -power);
+        setTargetPositionFrontLeft(target, power);
         setTargetPositionFrontRight(target, power);
-        setTargetPositionBackLeft(target, power);
-        setTargetPositionBackRight(target, -power);
+        setTargetPositionBackLeft(-target, power);
+        setTargetPositionBackRight(-target, power);
     }
 
     public void strafeLeft(int target, double power){
-        setTargetPositionFrontLeft(target, power);
-        setTargetPositionFrontRight(target, -power);
-        setTargetPositionBackLeft(target, -power);
+        setTargetPositionFrontLeft(-target, power);
+        setTargetPositionFrontRight(-target, power);
+        setTargetPositionBackLeft(target, power);
         setTargetPositionBackRight(target, power);
     }
 
@@ -123,6 +123,17 @@ public class AutoMechanum {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+    }
+
+    public void reset_encoders(){
+        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public boolean isBusy(){
+        return (frontLeft.isBusy() && frontRight.isBusy() && backRight.isBusy() && backLeft.isBusy());
     }
 
 
