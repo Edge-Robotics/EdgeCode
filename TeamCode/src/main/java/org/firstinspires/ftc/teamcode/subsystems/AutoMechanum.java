@@ -20,10 +20,10 @@ import java.util.*;
 
 public class AutoMechanum {
 
-    public static DcMotorEx frontLeft;
-    public static DcMotorEx frontRight;
-    public static DcMotorEx backLeft;
-    public static DcMotorEx backRight;
+    public DcMotorEx frontLeft;
+    public DcMotorEx frontRight;
+    public DcMotorEx backLeft;
+    public DcMotorEx backRight;
 
 
     double frontLeftPower;
@@ -42,6 +42,11 @@ public class AutoMechanum {
         frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -112,11 +117,18 @@ public class AutoMechanum {
     }
 
     public void strafeLeft(int target, double power){
-        setTargetPositionFrontLeft(-target, power);
-        setTargetPositionFrontRight(-target, power);
+        setTargetPositionFrontLeft(target, power);
+        setTargetPositionFrontRight(target, power);
         setTargetPositionBackLeft(target, power);
         setTargetPositionBackRight(target, power);
     }
+    public void strafeLeft(double power){ // change mecanum directions and add all other movement functions
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
+
 
     public void brake(){
         frontLeft.setPower(0);

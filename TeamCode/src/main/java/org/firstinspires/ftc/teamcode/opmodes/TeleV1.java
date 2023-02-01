@@ -100,10 +100,10 @@ public class TeleV1 extends LinearOpMode {
             while (!isStopRequested()) {
                 // Translation
                 if (Math.abs(gamepad1.left_stick_y) > 0.35 || Math.abs(gamepad1.left_stick_x) > 0.35 || Math.abs(gamepad1.right_stick_x) > 0.35) {
-                    frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.5);
-                    frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.5);
-                    backRight.setPower(((gamepad1.left_stick_y * -1 + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.5);
-                    backLeft.setPower(((gamepad1.left_stick_y + gamepad1.left_stick_x) - gamepad1.right_stick_x) / 1.5);
+                    frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
+                    frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
+                    backRight.setPower(((gamepad1.left_stick_y * -1 + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
+                    backLeft.setPower(((gamepad1.left_stick_y + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
                 } else {
                     frontLeft.setPower(0);
                     frontRight.setPower(0);

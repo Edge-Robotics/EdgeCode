@@ -1,5 +1,5 @@
 //Property of FTC Team 22346 - All External users must request permission to access and utilize code
-//Authors: Stanley H.
+//Authors: Stanley H., Avaninder B.
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -62,8 +62,14 @@ public class Left extends LinearOpMode {
         prevGreen = false;
         prevBlue = false;
 
-        mainAutoMechanum.strafeLeft(1000, .275);
-        sleep(3000);
+        mainAutoMechanum.strafeLeft(.3);
+        timer.reset();
+        while (timer.seconds()<2){
+            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        mainAutoMechanum.brake();
+
 
         timer.reset();
 
@@ -175,6 +181,6 @@ public class Left extends LinearOpMode {
     }
 
 
-    }
+}
 
 
