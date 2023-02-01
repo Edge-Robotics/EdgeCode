@@ -56,7 +56,7 @@ public class AutoMechanum {
     }
 
     public void setTargetPositionFrontLeft(int target, double power){
-        frontLeft.setTargetPosition(-target);
+        frontLeft.setTargetPosition(target);
         frontLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         frontLeft.setPower(power);
     }
@@ -69,7 +69,7 @@ public class AutoMechanum {
     }
 
     public void setTargetPositionBackLeft(int target, double power){
-        backLeft.setTargetPosition(-target);
+        backLeft.setTargetPosition(target);
         backLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         backLeft.setPower(power);
     }
@@ -80,53 +80,88 @@ public class AutoMechanum {
         backRight.setPower(power);
     }
 
-    public void driveForward(int target, double power){
-        setTargetPositionFrontLeft(target, power);
-        setTargetPositionFrontRight(target, power);
-        setTargetPositionBackLeft(target, power);
-        setTargetPositionBackRight(target, power);
-    }
-
-    public void driveBackward(int target, double power){
-        setTargetPositionFrontLeft(-target, power);
-        setTargetPositionFrontRight(-target, power);
-        setTargetPositionBackLeft(-target, power);
-        setTargetPositionBackRight(-target, power);
-    }
-
-    public void turnRight(int target, double power){
-        setTargetPositionFrontLeft(-target, power);
-        setTargetPositionFrontRight(target, power);
-        setTargetPositionBackLeft(-target, power);
-        setTargetPositionBackRight(target, power);
-
-    }
-
-    public void turnLeft(int target, double power){
-        setTargetPositionFrontLeft(target, power);
-        setTargetPositionFrontRight(-target, power);
-        setTargetPositionBackLeft(target, power);
-        setTargetPositionBackRight(-target, power);
-    }
-
-    public void strafeRight(int target, double power){
-        setTargetPositionFrontLeft(target, power);
-        setTargetPositionFrontRight(target, power);
-        setTargetPositionBackLeft(-target, power);
-        setTargetPositionBackRight(-target, power);
-    }
-
-    public void strafeLeft(int target, double power){
-        setTargetPositionFrontLeft(target, power);
-        setTargetPositionFrontRight(target, power);
-        setTargetPositionBackLeft(target, power);
-        setTargetPositionBackRight(target, power);
-    }
+//    public void driveForward(int target, double power){
+//        setTargetPositionFrontLeft(target, power);
+//        setTargetPositionFrontRight(target, power);
+//        setTargetPositionBackLeft(target, power);
+//        setTargetPositionBackRight(target, power);
+//    }
+//
+//    public void driveBackward(int target, double power){
+//        setTargetPositionFrontLeft(-target, power);
+//        setTargetPositionFrontRight(-target, power);
+//        setTargetPositionBackLeft(-target, power);
+//        setTargetPositionBackRight(-target, power);
+//    }
+//
+//    public void turnRight(int target, double power){
+//        setTargetPositionFrontLeft(-target, power);
+//        setTargetPositionFrontRight(target, power);
+//        setTargetPositionBackLeft(-target, power);
+//        setTargetPositionBackRight(target, power);
+//
+//    }
+//
+//    public void turnLeft(int target, double power){
+//        setTargetPositionFrontLeft(target, power);
+//        setTargetPositionFrontRight(-target, power);
+//        setTargetPositionBackLeft(target, power);
+//        setTargetPositionBackRight(-target, power);
+//    }
+//
+//    public void strafeRight(int target, double power){
+//        setTargetPositionFrontLeft(target, power);
+//        setTargetPositionFrontRight(target, power);
+//        setTargetPositionBackLeft(-target, power);
+//        setTargetPositionBackRight(-target, power);
+//    }
+//
+//    public void strafeLeft(int target, double power){
+//        setTargetPositionFrontLeft(target, power);
+//        setTargetPositionFrontRight(target, power);
+//        setTargetPositionBackLeft(target, power);
+//        setTargetPositionBackRight(target, power);
+//    }
     public void strafeLeft(double power){ // change mecanum directions and add all other movement functions
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
+    }
+
+    public void strafeRight(double power){ // change mecanum directions and add all other movement functions
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+    }
+
+    public void driveForward(double power){ // change mecanum directions and add all other movement functions
         frontLeft.setPower(power);
         frontRight.setPower(power);
         backLeft.setPower(power);
         backRight.setPower(power);
+    }
+
+    public void driveBackward(double power){ // change mecanum directions and add all other movement functions
+        frontLeft.setPower(-power);
+        frontRight.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(-power);
+    }
+
+    public void turnLeft(double power){ // change mecanum directions and add all other movement functions
+        frontLeft.setPower(-power);
+        frontRight.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
+
+    public void turnRight(double power){ // change mecanum directions and add all other movement functions
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(-power);
+        backRight.setPower(-power);
     }
 
 

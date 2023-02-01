@@ -70,9 +70,6 @@ public class Left extends LinearOpMode {
         }
         mainAutoMechanum.brake();
 
-
-        timer.reset();
-
         while (timer.seconds() < 2) {
             telemetry.addData("Red", colorSensor.red());
             telemetry.addData("Green", colorSensor.green());
@@ -141,24 +138,87 @@ public class Left extends LinearOpMode {
             //if it detects unknown for more that 3 seconds, have it park in substation
         }
 
-        mainAutoMechanum.strafeLeft(1000, .275);
-        mainElevator.setTargetPosition(topPosition);
-        mainAutoMechanum.driveForward(150, .275);
-        sleep(1000);
-        mainElevator.setTargetPosition(topPosition-50);
-        sleep(1000);
-        mainClaw.openClaw();
-        sleep(1000);
-        mainAutoMechanum.driveBackward(150, .275);
-        mainElevator.setTargetPosition(bottomPosition);
-        mainAutoMechanum.strafeRight(1000, .275);
+        mainAutoMechanum.strafeLeft(.3);
+        timer.reset();
+        while (timer.seconds()<2){
+            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        mainAutoMechanum.brake();
+        sleep(500);
 
-        if (red){
-            mainAutoMechanum.driveBackward(2000, .275);
+        mainElevator.setTargetPosition(topPosition);
+        sleep(500);
+
+        mainAutoMechanum.driveForward(.2);
+        timer.reset();
+        while (timer.seconds()<0.5){
+            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
+            telemetry.update();
         }
-        if (blue){
-            mainAutoMechanum.driveForward(2000,.275);
+        mainAutoMechanum.brake();
+        sleep(500);
+        mainElevator.setTargetPosition(topPosition-50);
+        sleep(500);
+        mainClaw.openClaw();
+        sleep(100);
+        mainClaw.closeClaw();
+
+        mainAutoMechanum.driveBackward(.2);
+        timer.reset();
+        while (timer.seconds()<0.5){
+            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
+            telemetry.update();
         }
+        mainAutoMechanum.brake();
+        mainElevator.setTargetPosition(bottomPosition);
+
+        mainAutoMechanum.strafeRight(.3);
+        timer.reset();
+        while (timer.seconds()<3){
+            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        mainAutoMechanum.brake();
+
+        if(red){
+            mainAutoMechanum.driveBackward(.3);
+            timer.reset();
+            while (timer.seconds()<2){
+                telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
+                telemetry.update();
+            }
+            mainAutoMechanum.brake();
+        }
+        else if(blue){
+            mainAutoMechanum.driveForward(.3);
+            timer.reset();
+            while (timer.seconds()<2){
+                telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
+                telemetry.update();
+            }
+            mainAutoMechanum.brake();
+        }
+
+
+
+
+//        mainAutoMechanum.driveForward(150, .275);
+//        sleep(1000);
+//
+//        sleep(1000);
+//        mainClaw.openClaw();
+//        sleep(1000);
+//        mainAutoMechanum.driveBackward(150, .275);
+//        mainElevator.setTargetPosition(bottomPosition);
+//        mainAutoMechanum.strafeRight(1000, .275);
+//
+//        if (red){
+//            mainAutoMechanum.driveBackward(2000, .275);
+//        }
+//        if (blue){
+//            mainAutoMechanum.driveForward(2000,.275);
+//        }
 
 
 
