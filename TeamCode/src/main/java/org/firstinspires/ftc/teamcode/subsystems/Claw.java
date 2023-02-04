@@ -20,10 +20,11 @@ public class Claw {
         rightServo = hardwareMap.get(Servo.class, "rightServo");
     }
 
-    double LeftClosePos = -1;
-    double LeftOpenPos = 1;
-    double RightClosePos = -1;
-    double RightOpenPos = 1;
+    double LeftClosePos = -0.73;
+    double RightClosePos = 0.53;
+
+    double LeftOpenPos = 0.6;
+    double RightOpenPos = -0.85;
 
     public void openClaw(){
         leftServo.setPosition(LeftOpenPos);

@@ -48,7 +48,13 @@ public class TeleV1 extends LinearOpMode {
     double bottomPosition = 0;
     double slightPosition = 300;
     double midPosition = 2020;
-    double topPosition = 2780;
+    double topPosition = 2750;
+    double cone1 = 400;
+    double cone2 = 300;
+    double cone3 = 200;
+    double cone4 = 100;
+    double cone5 = 0;
+
 
 
     @Override
@@ -102,8 +108,8 @@ public class TeleV1 extends LinearOpMode {
                 if (Math.abs(gamepad1.left_stick_y) > 0.35 || Math.abs(gamepad1.left_stick_x) > 0.35 || Math.abs(gamepad1.right_stick_x) > 0.35) {
                     frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
                     frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
-                    backRight.setPower(((gamepad1.left_stick_y * -1 + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
-                    backLeft.setPower(((gamepad1.left_stick_y + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
+                    backRight.setPower(((gamepad1.left_stick_y  + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
+                    backLeft.setPower(((gamepad1.left_stick_y * -1 + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
                 } else {
                     frontLeft.setPower(0);
                     frontRight.setPower(0);
@@ -113,10 +119,10 @@ public class TeleV1 extends LinearOpMode {
 
                 if (gamepad1.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
-                    slightPosition += 7;
-                    midPosition += 7;
-                    topPosition += 7;
-                    bottomPosition -= 7;
+                    slightPosition += 5;
+                    midPosition += 5;
+                    topPosition += 5;
+                    bottomPosition -= 5;
                 }
 
                 if (gamepad1.dpad_down) {
@@ -142,12 +148,24 @@ public class TeleV1 extends LinearOpMode {
 
 
                 while (gamepad1.left_trigger > 0.3) {
-                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(45 * gamepad1.left_trigger));
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(50 * gamepad1.left_trigger));
                 }
 
                 while (gamepad1.left_bumper) {
                     mainElevator.setTargetPosition(elevator.getCurrentPosition()+30);
+                }
 
+                if (gamepad1.y){
+                    mainElevator.setTargetPosition(cone1);
+                }
+                if (gamepad1.b){
+                    mainElevator.setTargetPosition(cone2);
+                }
+                if (gamepad1.x){
+                    mainElevator.setTargetPosition(cone3);
+                }
+                if (gamepad1.a){
+                    mainElevator.setTargetPosition(cone4);
                 }
 
                 telemetry.update();

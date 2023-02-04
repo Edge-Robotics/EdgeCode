@@ -2,6 +2,7 @@
 //Authors: Stanley H., Avaninder B.
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -42,13 +43,14 @@ public class Left extends LinearOpMode {
     private final ElapsedTime timer = new ElapsedTime();
 
     public void runOpMode() {
+        MultipleTelemetry telemetry = new MultipleTelemetry();
         elevator = hardwareMap.get(DcMotorEx.class, "elevator");
         leftServo = hardwareMap.get(Servo.class, "leftServo");
         rightServo = hardwareMap.get(Servo.class, "rightServo");
 
         mainClaw.init(hardwareMap);
         mainElevator.init(hardwareMap);
-        mainAutoMechanum.init(hardwareMap);
+        mainAutoMechanum.init(hardwareMap, telemetry);
 
         colorSensor = hardwareMap.get(ColorSensor.class, "ColorSensor");
 
@@ -62,15 +64,12 @@ public class Left extends LinearOpMode {
         prevGreen = false;
         prevBlue = false;
 
-        mainAutoMechanum.strafeLeft(.3);
-        timer.reset();
-        while (timer.seconds()<2){
-            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
-            telemetry.update();
-        }
-        mainAutoMechanum.brake();
+        mainClaw.closeClaw();
+        mainAutoMechanum.strafeLeft(.3,1.75);
+        sleep(3000);
 
-        while (timer.seconds() < 2) {
+        timer.reset();
+        while (timer.seconds() < 3) {
             telemetry.addData("Red", colorSensor.red());
             telemetry.addData("Green", colorSensor.green());
             telemetry.addData("Blue", colorSensor.blue());
@@ -135,22 +134,14 @@ public class Left extends LinearOpMode {
             telemetry.addData("Final Color Detected", "Blue");
         } else {
             telemetry.addData("Final Color Detected", "Unknown");
-            //if it detects unknown for more that 3 seconds, have it park in substation
         }
 
-        mainAutoMechanum.strafeLeft(.3);
-        timer.reset();
-        while (timer.seconds()<2){
-            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
-            telemetry.update();
-        }
-        mainAutoMechanum.brake();
-        sleep(500);
+        mainAutoMechanum.strafeLeft(.3,2.2);
 
         mainElevator.setTargetPosition(topPosition);
         sleep(500);
 
-        mainAutoMechanum.driveForward(.2);
+        mainAutoMechanum.driveForward(.2, 3.75);
         timer.reset();
         while (timer.seconds()<0.5){
             telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());

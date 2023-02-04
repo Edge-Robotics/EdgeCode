@@ -37,7 +37,7 @@ public class Elevator {
             Power = 0.65;
         } else if (currentPos > target) {
             // Going down
-            Power = -0.3;
+            Power = -0.6;
         }
 
         elevator.setTargetPosition((int) target);

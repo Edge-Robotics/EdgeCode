@@ -3,6 +3,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 import static java.lang.Thread.sleep;
 
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,6 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.*;
 
@@ -24,15 +26,12 @@ public class AutoMechanum {
     public DcMotorEx frontRight;
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
+    private final ElapsedTime timer = new ElapsedTime();
+
+    MultipleTelemetry telemetry;
 
 
-    double frontLeftPower;
-    double frontRightPower;
-    double backLeftPower;
-    double backRightPower;
-
-
-    public void init(HardwareMap hardwareMap) {
+    public void init(HardwareMap hardwareMap, MultipleTelemetry tele ) {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
@@ -53,117 +52,138 @@ public class AutoMechanum {
         backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+        telemetry = tele;
     }
 
-    public void setTargetPositionFrontLeft(int target, double power){
-        frontLeft.setTargetPosition(target);
-        frontLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    public void strafeLeft(double power, double time){
         frontLeft.setPower(power);
-    }
-
-
-    public void setTargetPositionFrontRight(int target, double power){
-        frontRight.setTargetPosition(target);
-        frontRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         frontRight.setPower(power);
-    }
-
-    public void setTargetPositionBackLeft(int target, double power){
-        backLeft.setTargetPosition(target);
-        backLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         backLeft.setPower(power);
-    }
-
-    public void setTargetPositionBackRight(int target, double power){
-        backRight.setTargetPosition(target);
-        backRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         backRight.setPower(power);
+        timer.reset();
+        while (timer.seconds() < time){
+            telemetry.addData("frontRightPos", frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
     }
 
-//    public void driveForward(int target, double power){
-//        setTargetPositionFrontLeft(target, power);
-//        setTargetPositionFrontRight(target, power);
-//        setTargetPositionBackLeft(target, power);
-//        setTargetPositionBackRight(target, power);
-//    }
-//
-//    public void driveBackward(int target, double power){
-//        setTargetPositionFrontLeft(-target, power);
-//        setTargetPositionFrontRight(-target, power);
-//        setTargetPositionBackLeft(-target, power);
-//        setTargetPositionBackRight(-target, power);
-//    }
-//
-//    public void turnRight(int target, double power){
-//        setTargetPositionFrontLeft(-target, power);
-//        setTargetPositionFrontRight(target, power);
-//        setTargetPositionBackLeft(-target, power);
-//        setTargetPositionBackRight(target, power);
-//
-//    }
-//
-//    public void turnLeft(int target, double power){
-//        setTargetPositionFrontLeft(target, power);
-//        setTargetPositionFrontRight(-target, power);
-//        setTargetPositionBackLeft(target, power);
-//        setTargetPositionBackRight(-target, power);
-//    }
-//
-//    public void strafeRight(int target, double power){
-//        setTargetPositionFrontLeft(target, power);
-//        setTargetPositionFrontRight(target, power);
-//        setTargetPositionBackLeft(-target, power);
-//        setTargetPositionBackRight(-target, power);
-//    }
-//
-//    public void strafeLeft(int target, double power){
-//        setTargetPositionFrontLeft(target, power);
-//        setTargetPositionFrontRight(target, power);
-//        setTargetPositionBackLeft(target, power);
-//        setTargetPositionBackRight(target, power);
-//    }
-    public void strafeLeft(double power){ // change mecanum directions and add all other movement functions
+    public void strafeRight(double power, double time){
         frontLeft.setPower(-power);
-        frontRight.setPower(power);
-        backLeft.setPower(-power);
-        backRight.setPower(power);
-    }
-
-    public void strafeRight(double power){ // change mecanum directions and add all other movement functions
-        frontLeft.setPower(power);
         frontRight.setPower(-power);
-        backLeft.setPower(power);
+        backLeft.setPower(-power);
         backRight.setPower(-power);
+        timer.reset();
+        while (timer.seconds() < time){
+            telemetry.addData("frontRightPos", frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
     }
 
-    public void driveForward(double power){ // change mecanum directions and add all other movement functions
-        frontLeft.setPower(power);
-        frontRight.setPower(power);
-        backLeft.setPower(power);
-        backRight.setPower(power);
-    }
-
-    public void driveBackward(double power){ // change mecanum directions and add all other movement functions
+    public void strafeRight(double power){
         frontLeft.setPower(-power);
         frontRight.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(-power);
     }
 
-    public void turnLeft(double power){ // change mecanum directions and add all other movement functions
+    public void driveForward(double power, double time){
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+        timer.reset();
+        while (timer.seconds() < time){
+            telemetry.addData("frontRightPos", frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
+
+    public void driveForward(double power){
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+    }
+
+    public void driveBackward(double power, double time){
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
+        timer.reset();
+        while (timer.seconds() < time){
+            telemetry.addData("frontRightPos", frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
+
+    public void driveBackward(double power){
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
+    }
+
+    public void turnLeft(double power, double time){
+        frontLeft.setPower(-power);
+        frontRight.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+        timer.reset();
+        while (timer.seconds() < time){
+            telemetry.addData("frontRightPos", frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
+
+    public void turnLeft(double power){
         frontLeft.setPower(-power);
         frontRight.setPower(-power);
         backLeft.setPower(power);
         backRight.setPower(power);
     }
 
-    public void turnRight(double power){ // change mecanum directions and add all other movement functions
+    public void turnRight(double power, double time){
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(-power);
+        backRight.setPower(-power);
+        timer.reset();
+        while (timer.seconds() < time){
+            telemetry.addData("frontRightPos", frontRight.getCurrentPosition());
+            telemetry.update();
+        }
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
+    public void turnRight(double power){
         frontLeft.setPower(power);
         frontRight.setPower(power);
         backLeft.setPower(-power);
         backRight.setPower(-power);
     }
-
 
     public void brake(){
         frontLeft.setPower(0);
