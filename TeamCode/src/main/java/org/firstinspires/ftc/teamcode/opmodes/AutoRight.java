@@ -15,9 +15,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 
 
-@Autonomous(name = "Left", group = "AutoOp")
+@Autonomous(name = "AutoRight", group = "AutoOp")
 
-public class Left extends LinearOpMode {
+public class AutoRight extends LinearOpMode {
     DcMotorEx frontLeft;
     DcMotorEx backLeft;
     DcMotorEx backRight;
@@ -65,7 +65,7 @@ public class Left extends LinearOpMode {
         prevBlue = false;
 
         mainClaw.closeClaw();
-        mainAutoMechanum.strafeLeft(.3,1.75);
+        mainAutoMechanum.strafeRight(.3, 1.75);
         sleep(3000);
 
         timer.reset();
@@ -73,29 +73,28 @@ public class Left extends LinearOpMode {
             telemetry.addData("Red", colorSensor.red());
             telemetry.addData("Green", colorSensor.green());
             telemetry.addData("Blue", colorSensor.blue());
-            if (colorSensor.red() > colorSensor.blue()  && colorSensor.red() > colorSensor.green()) {
+            if (colorSensor.red() > colorSensor.blue() && colorSensor.red() > colorSensor.green()) {
                 red = true;
                 green = false;
                 blue = false;
-                if (!prevRed){
+                if (!prevRed) {
                     timer.reset();
                 }
             } else if (colorSensor.green() > colorSensor.red() && colorSensor.green() > colorSensor.blue()) {
                 green = true;
                 red = false;
                 blue = false;
-                if (!prevGreen){
+                if (!prevGreen) {
                     timer.reset();
                 }
             } else if (colorSensor.blue() > colorSensor.green() && colorSensor.blue() > colorSensor.red()) {
                 blue = true;
                 red = false;
                 green = false;
-                if (!prevBlue){
+                if (!prevBlue) {
                     timer.reset();
                 }
-            }
-            else{
+            } else {
                 timer.reset();
             }
 
@@ -136,102 +135,59 @@ public class Left extends LinearOpMode {
             telemetry.addData("Final Color Detected", "Unknown");
         }
 
-        mainAutoMechanum.strafeLeft(.3,2.2);
+        mainAutoMechanum.strafeRight(.3, 2.2);
 
         mainElevator.setTargetPosition(topPosition);
         sleep(500);
 
         mainAutoMechanum.driveForward(.2, 3.75);
         timer.reset();
-        while (timer.seconds()<0.5){
+        while (timer.seconds() < 0.5) {
             telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
             telemetry.update();
         }
         mainAutoMechanum.brake();
         sleep(500);
-        mainElevator.setTargetPosition(topPosition-50);
+        mainElevator.setTargetPosition(topPosition - 50);
         sleep(500);
         mainClaw.openClaw();
         sleep(100);
         mainClaw.closeClaw();
 
-        mainAutoMechanum.driveBackward(.2);
+        mainAutoMechanum.driveBackward(.2, 1.25);
         timer.reset();
-        while (timer.seconds()<0.5){
+        while (timer.seconds() < 0.5) {
             telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
             telemetry.update();
         }
         mainAutoMechanum.brake();
         mainElevator.setTargetPosition(bottomPosition);
 
-        mainAutoMechanum.strafeRight(.3);
+        mainAutoMechanum.strafeLeft(.3, 2);
         timer.reset();
-        while (timer.seconds()<3){
+        while (timer.seconds() < 3) {
             telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
             telemetry.update();
         }
         mainAutoMechanum.brake();
 
-        if(red){
-            mainAutoMechanum.driveBackward(.3);
+        if (red) {
+            mainAutoMechanum.driveBackward(.3, 4);
             timer.reset();
-            while (timer.seconds()<2){
+            while (timer.seconds() < 2) {
+                telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
+                telemetry.update();
+            }
+            mainAutoMechanum.brake();
+        } else if (blue) {
+            mainAutoMechanum.driveForward(.3, 4);
+            timer.reset();
+            while (timer.seconds() < 2) {
                 telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
                 telemetry.update();
             }
             mainAutoMechanum.brake();
         }
-        else if(blue){
-            mainAutoMechanum.driveForward(.3);
-            timer.reset();
-            while (timer.seconds()<2){
-                telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
-                telemetry.update();
-            }
-            mainAutoMechanum.brake();
-        }
 
 
-
-
-//        mainAutoMechanum.driveForward(150, .275);
-//        sleep(1000);
-//
-//        sleep(1000);
-//        mainClaw.openClaw();
-//        sleep(1000);
-//        mainAutoMechanum.driveBackward(150, .275);
-//        mainElevator.setTargetPosition(bottomPosition);
-//        mainAutoMechanum.strafeRight(1000, .275);
-//
-//        if (red){
-//            mainAutoMechanum.driveBackward(2000, .275);
-//        }
-//        if (blue){
-//            mainAutoMechanum.driveForward(2000,.275);
-//        }
-
-
-
-
-
-
-
-//        while (mainAutoMechanum.isBusy()) {
-//            telemetry.update();
-//            telemetry.addData("Front Left: ", AutoMechanum.frontLeft.getCurrentPosition());
-//            telemetry.addData("Front Right: ", AutoMechanum.frontRight.getCurrentPosition());
-//            telemetry.addData("Back Left: ", AutoMechanum.backLeft.getCurrentPosition());
-//            telemetry.addData("Back Right: ", AutoMechanum.backRight.getCurrentPosition());
-//            telemetry.addData("Code uploaded", "yes");
-//        }
-
-
-
-
-    }
-
-
-}
-
-
+    }}

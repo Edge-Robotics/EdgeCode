@@ -87,13 +87,6 @@ public class AutoMechanum {
         backRight.setPower(0);
     }
 
-    public void strafeRight(double power){
-        frontLeft.setPower(-power);
-        frontRight.setPower(-power);
-        backLeft.setPower(-power);
-        backRight.setPower(-power);
-    }
-
     public void driveForward(double power, double time){
         frontLeft.setPower(-power);
         frontRight.setPower(power);
@@ -108,13 +101,6 @@ public class AutoMechanum {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
-    }
-
-    public void driveForward(double power){
-        frontLeft.setPower(-power);
-        frontRight.setPower(power);
-        backLeft.setPower(power);
-        backRight.setPower(-power);
     }
 
     public void driveBackward(double power, double time){
@@ -133,13 +119,6 @@ public class AutoMechanum {
         backRight.setPower(0);
     }
 
-    public void driveBackward(double power){
-        frontLeft.setPower(power);
-        frontRight.setPower(-power);
-        backLeft.setPower(-power);
-        backRight.setPower(power);
-    }
-
     public void turnLeft(double power, double time){
         frontLeft.setPower(-power);
         frontRight.setPower(-power);
@@ -156,13 +135,6 @@ public class AutoMechanum {
         backRight.setPower(0);
     }
 
-    public void turnLeft(double power){
-        frontLeft.setPower(-power);
-        frontRight.setPower(-power);
-        backLeft.setPower(power);
-        backRight.setPower(power);
-    }
-
     public void turnRight(double power, double time){
         frontLeft.setPower(power);
         frontRight.setPower(power);
@@ -177,12 +149,6 @@ public class AutoMechanum {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
-    }
-    public void turnRight(double power){
-        frontLeft.setPower(power);
-        frontRight.setPower(power);
-        backLeft.setPower(-power);
-        backRight.setPower(-power);
     }
 
     public void brake(){
