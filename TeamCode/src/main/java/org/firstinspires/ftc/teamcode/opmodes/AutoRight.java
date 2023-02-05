@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.AutoMechanum;
+import org.firstinspires.ftc.teamcode.subsystems.Camera;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 
@@ -43,6 +44,8 @@ public class AutoRight extends LinearOpMode {
     private final ElapsedTime timer = new ElapsedTime();
 
     public void runOpMode() {
+        Camera camera = new Camera();
+        camera.init(hardwareMap);
         MultipleTelemetry telemetry = new MultipleTelemetry();
         elevator = hardwareMap.get(DcMotorEx.class, "elevator");
         leftServo = hardwareMap.get(Servo.class, "leftServo");
@@ -52,126 +55,26 @@ public class AutoRight extends LinearOpMode {
         mainElevator.init(hardwareMap);
         mainAutoMechanum.init(hardwareMap, telemetry);
 
-        colorSensor = hardwareMap.get(ColorSensor.class, "ColorSensor");
+//        colorSensor = hardwareMap.get(ColorSensor.class, "ColorSensor");
 
         mainElevator.setTargetPosition(bottomPosition);
+
+
         waitForStart();
 
-        red = false;
-        green = false;
-        blue = false;
-        prevRed = false;
-        prevGreen = false;
-        prevBlue = false;
+        timer.reset();
+        int position = -1;
+        position = camera.getPosition();
+        telemetry.addData("position", position);
+        telemetry.update();
+        sleep(50);
+
 
         mainClaw.closeClaw();
-        mainAutoMechanum.strafeRight(.3, 1.75);
-        sleep(3000);
 
-        timer.reset();
-        while (timer.seconds() < 3) {
-            telemetry.addData("Red", colorSensor.red());
-            telemetry.addData("Green", colorSensor.green());
-            telemetry.addData("Blue", colorSensor.blue());
-            if (colorSensor.red() > colorSensor.blue() && colorSensor.red() > colorSensor.green()) {
-                red = true;
-                green = false;
-                blue = false;
-                if (!prevRed) {
-                    timer.reset();
-                }
-            } else if (colorSensor.green() > colorSensor.red() && colorSensor.green() > colorSensor.blue()) {
-                green = true;
-                red = false;
-                blue = false;
-                if (!prevGreen) {
-                    timer.reset();
-                }
-            } else if (colorSensor.blue() > colorSensor.green() && colorSensor.blue() > colorSensor.red()) {
-                blue = true;
-                red = false;
-                green = false;
-                if (!prevBlue) {
-                    timer.reset();
-                }
-            } else {
-                timer.reset();
-            }
+        mainAutoMechanum.strafeLeft(.3, 5);
 
-            if (red) {
-                telemetry.addData("Current Color Detected", "Red");
-                prevRed = true;
-                prevBlue = false;
-                prevGreen = false;
-            } else if (green) {
-                telemetry.addData("Current Color Detected", "Green");
-                prevGreen = true;
-                prevRed = false;
-                prevBlue = false;
-            } else if (blue) {
-                telemetry.addData("Current Color Detected", "Blue");
-                prevBlue = true;
-                prevRed = false;
-                prevGreen = false;
-            } else {
-                telemetry.addData("Current Color Detected", "Unknown");
-                prevRed = false;
-                prevGreen = false;
-                prevBlue = false;
-            }
-
-            red = false;
-            green = false;
-            blue = false;
-        }
-
-        if (red) {
-            telemetry.addData("Final Color Detected", "Red");
-        } else if (green) {
-            telemetry.addData("Final Color Detected", "Green");
-        } else if (blue) {
-            telemetry.addData("Final Color Detected", "Blue");
-        } else {
-            telemetry.addData("Final Color Detected", "Unknown");
-        }
-
-        mainAutoMechanum.strafeRight(.3, 2.2);
-
-        mainElevator.setTargetPosition(topPosition);
-        sleep(500);
-
-        mainAutoMechanum.driveForward(.2, 3.75);
-        timer.reset();
-        while (timer.seconds() < 0.5) {
-            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
-            telemetry.update();
-        }
-        mainAutoMechanum.brake();
-        sleep(500);
-        mainElevator.setTargetPosition(topPosition - 50);
-        sleep(500);
-        mainClaw.openClaw();
-        sleep(100);
-        mainClaw.closeClaw();
-
-        mainAutoMechanum.driveBackward(.2, 1.25);
-        timer.reset();
-        while (timer.seconds() < 0.5) {
-            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
-            telemetry.update();
-        }
-        mainAutoMechanum.brake();
-        mainElevator.setTargetPosition(bottomPosition);
-
-        mainAutoMechanum.strafeLeft(.3, 2);
-        timer.reset();
-        while (timer.seconds() < 3) {
-            telemetry.addData("frontRightPos", mainAutoMechanum.frontRight.getCurrentPosition());
-            telemetry.update();
-        }
-        mainAutoMechanum.brake();
-
-        if (red) {
+        if (position == 1) {
             mainAutoMechanum.driveBackward(.3, 4);
             timer.reset();
             while (timer.seconds() < 2) {
@@ -179,7 +82,7 @@ public class AutoRight extends LinearOpMode {
                 telemetry.update();
             }
             mainAutoMechanum.brake();
-        } else if (blue) {
+        } else if (position == 3) {
             mainAutoMechanum.driveForward(.3, 4);
             timer.reset();
             while (timer.seconds() < 2) {

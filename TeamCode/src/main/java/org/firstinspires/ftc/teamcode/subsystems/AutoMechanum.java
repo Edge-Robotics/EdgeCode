@@ -31,7 +31,7 @@ public class AutoMechanum {
     MultipleTelemetry telemetry;
 
 
-    public void init(HardwareMap hardwareMap, MultipleTelemetry tele ) {
+    public void init(HardwareMap hardwareMap, MultipleTelemetry tele) {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");

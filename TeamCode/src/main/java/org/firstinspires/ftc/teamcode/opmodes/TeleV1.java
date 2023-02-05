@@ -90,14 +90,14 @@ public class TeleV1 extends LinearOpMode {
             telemetry.addData("left stick y", gamepad1.left_stick_y);
             telemetry.addData("left stick x", gamepad1.left_stick_x);
             telemetry.addData("right stick x", gamepad1.right_stick_x);
-            telemetry.addData("A", gamepad1.a);
-            telemetry.addData("B", gamepad1.b);
-            telemetry.addData("X", gamepad1.x);
-            telemetry.addData("Y", gamepad1.y);
-            telemetry.addData("Right Trigger", gamepad1.right_trigger);
-            telemetry.addData("Right Bumper", gamepad1.right_bumper);
-            telemetry.addData("Left Trigger", gamepad1.left_trigger);
-            telemetry.addData("Left Bumper", gamepad1.left_bumper);
+            telemetry.addData("A", gamepad2.a);
+            telemetry.addData("B", gamepad2.b);
+            telemetry.addData("X", gamepad2.x);
+            telemetry.addData("Y", gamepad2.y);
+            telemetry.addData("Right Trigger", gamepad2.right_trigger);
+            telemetry.addData("Right Bumper", gamepad2.right_bumper);
+            telemetry.addData("Left Trigger", gamepad2.left_trigger);
+            telemetry.addData("Left Bumper", gamepad2.left_bumper);
             telemetry.addData("Left Servo Position", leftServo.getPosition());
             telemetry.addData("Right Servo Position", rightServo.getPosition());
 
@@ -117,7 +117,7 @@ public class TeleV1 extends LinearOpMode {
                     backLeft.setPower(0);
                 }
 
-                if (gamepad1.dpad_up) {
+                if (gamepad2.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
                     slightPosition += 5;
                     midPosition += 5;
@@ -125,46 +125,46 @@ public class TeleV1 extends LinearOpMode {
                     bottomPosition -= 5;
                 }
 
-                if (gamepad1.dpad_down) {
+                if (gamepad2.dpad_down) {
                     mainElevator.setTargetPosition(bottomPosition);
                 }
 
-                if (gamepad1.dpad_right) {
+                if (gamepad2.dpad_right) {
                     mainElevator.setTargetPosition(midPosition);
                 }
 
-                if (gamepad1.dpad_left) {
+                if (gamepad2.dpad_left) {
                     mainElevator.setTargetPosition(slightPosition);
                 }
 
 
-                if (gamepad1.right_trigger > 0.3) {
+                if (gamepad2.right_trigger > 0.3) {
                     mainClaw.openClaw();
                 }
 
-                if (gamepad1.right_bumper) {
+                if (gamepad2.right_bumper) {
                     mainClaw.closeClaw();
                 }
 
 
-                while (gamepad1.left_trigger > 0.3) {
-                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(50 * gamepad1.left_trigger));
+                while (gamepad2.left_trigger > 0.3) {
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(50 * gamepad2.left_trigger));
                 }
 
-                while (gamepad1.left_bumper) {
+                while (gamepad2.left_bumper) {
                     mainElevator.setTargetPosition(elevator.getCurrentPosition()+30);
                 }
 
-                if (gamepad1.y){
+                if (gamepad2.y){
                     mainElevator.setTargetPosition(cone1);
                 }
-                if (gamepad1.b){
+                if (gamepad2.b){
                     mainElevator.setTargetPosition(cone2);
                 }
-                if (gamepad1.x){
+                if (gamepad2.x){
                     mainElevator.setTargetPosition(cone3);
                 }
-                if (gamepad1.a){
+                if (gamepad2.a){
                     mainElevator.setTargetPosition(cone4);
                 }
 
