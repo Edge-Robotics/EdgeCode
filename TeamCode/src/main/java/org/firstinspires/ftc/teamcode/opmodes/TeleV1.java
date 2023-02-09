@@ -48,7 +48,7 @@ public class TeleV1 extends LinearOpMode {
     double bottomPosition = 0;
     double slightPosition = 300;
     double midPosition = 2020;
-    double topPosition = 2755;
+    double topPosition = 2765;
     double cone1 = 400;
     double cone2 = 300;
     double cone3 = 200;
@@ -105,11 +105,11 @@ public class TeleV1 extends LinearOpMode {
 
             while (!isStopRequested()) {
                 // Translation
-                if (Math.abs(gamepad1.left_stick_y) > 0.35 || Math.abs(gamepad1.left_stick_x) > 0.35 || Math.abs(gamepad1.right_stick_x) > 0.35) {
-                    frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
-                    frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
-                    backRight.setPower(((gamepad1.left_stick_y  + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
-                    backLeft.setPower(((gamepad1.left_stick_y * -1 + gamepad1.right_stick_x) - gamepad1.left_stick_x) / 1.5);
+                if (Math.abs(gamepad1.left_stick_y) > 0.2 || Math.abs(gamepad1.left_stick_x) > 0.2 || Math.abs(gamepad1.right_stick_x) > 0.2) {
+                    frontLeft.setPower(((gamepad1.left_stick_y - gamepad1.right_stick_x * 1.22) - gamepad1.left_stick_x) / 1.2);
+                    frontRight.setPower(((gamepad1.left_stick_y * -1 - gamepad1.right_stick_x * 1.22) - gamepad1.left_stick_x) / 1.2);
+                    backRight.setPower(((gamepad1.left_stick_y  + gamepad1.right_stick_x * 1.22) - gamepad1.left_stick_x) / 1.2);
+                    backLeft.setPower(((gamepad1.left_stick_y * -1 + gamepad1.right_stick_x * 1.22) - gamepad1.left_stick_x) / 1.2);
                 } else {
                     frontLeft.setPower(0);
                     frontRight.setPower(0);
@@ -119,7 +119,8 @@ public class TeleV1 extends LinearOpMode {
 
                 if (gamepad2.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
-                    bottomPosition -= 5;
+                    bottomPosition -= 1;
+                    topPosition += 1;
                 }
 
                 if (gamepad2.dpad_down) {
@@ -144,22 +145,22 @@ public class TeleV1 extends LinearOpMode {
                 }
 
 
-                while (gamepad2.left_trigger > 0.3) {
-                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(60 * gamepad2.left_trigger));
+                while (gamepad2.left_trigger > 0.3) { //change to if statements
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(65 * gamepad2.left_trigger));
                 }
 
-                while (gamepad2.left_bumper) {
-                    mainElevator.setTargetPosition(elevator.getCurrentPosition()+50);
+                while (gamepad2.left_bumper) { //change to if statements
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()+60);
                 }
 
-                while (gamepad2.left_stick_x > 0.3) {
-                    leftServo.setPosition(leftServo.getPosition() + 0.03);
-                    rightServo.setPosition(rightServo.getPosition() - 0.03);
+                while (gamepad2.right_stick_x > 0.3) { //change to if statements
+                    leftServo.setPosition(leftServo.getPosition() + 0.002);
+                    rightServo.setPosition(rightServo.getPosition() - 0.002);
                 }
 
-                while (gamepad2.left_stick_x < -0.3) {
-                    leftServo.setPosition(leftServo.getPosition() - 0.03);
-                    rightServo.setPosition(rightServo.getPosition() + 0.03);
+                while (gamepad2.right_stick_x < -0.3) { //change to if statements
+                    leftServo.setPosition(leftServo.getPosition() - 0.002);
+                    rightServo.setPosition(rightServo.getPosition() + 0.002);
                 }
 
                 if (gamepad2.y){

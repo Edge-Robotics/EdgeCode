@@ -70,13 +70,15 @@ public class AutoLeft extends LinearOpMode {
 
         mainClaw.closeClaw();
 
-        mainAutoMechanum.strafeLeft(.3, 3);
+        mainAutoMechanum.strafeLeft(.3, 3.2);
         sleep(300);
-        mainAutoMechanum.strafeRight(.3, .5);
+        mainAutoMechanum.strafeRight(.3, .35);
 
         if (position == 1) {
+            telemetry.addData("not moving", "it was 1 i think");
             mainAutoMechanum.driveBackward(.3, 4);
         } else if (position == 3) {
+            telemetry.addData("not moving", "it was 3 i think");
             mainAutoMechanum.driveForward(.3, 4);
             mainAutoMechanum.brake();
         }
@@ -85,7 +87,7 @@ public class AutoLeft extends LinearOpMode {
             telemetry.update();
         }
         else if (position == -1){
-            telemetry.addData("not moving", "it was 2 i think");
+            telemetry.addData("not moving", "I have no idea :(");
             telemetry.update();
         }
 

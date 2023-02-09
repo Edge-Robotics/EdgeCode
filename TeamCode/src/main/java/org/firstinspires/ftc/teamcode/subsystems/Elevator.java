@@ -34,10 +34,10 @@ public class Elevator {
 
         if (currentPos < target) {
             // Going up
-            Power = 0.65;
+            Power = 0.8;
         } else if (currentPos > target) {
             // Going down
-            Power = -0.6;
+            Power = -0.8;
         }
 
         elevator.setTargetPosition((int) target);
