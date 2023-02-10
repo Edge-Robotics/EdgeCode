@@ -119,8 +119,8 @@ public class TeleV1 extends LinearOpMode {
 
                 if (gamepad2.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
-                    bottomPosition -= 1;
-                    topPosition += 1;
+                    bottomPosition += 0.2;
+                    topPosition += 0.5;
                 }
 
                 if (gamepad2.dpad_down) {
@@ -146,11 +146,11 @@ public class TeleV1 extends LinearOpMode {
 
 
                 while (gamepad2.left_trigger > 0.3) { //change to if statements
-                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(65 * gamepad2.left_trigger));
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(75 * gamepad2.left_trigger));
                 }
 
                 while (gamepad2.left_bumper) { //change to if statements
-                    mainElevator.setTargetPosition(elevator.getCurrentPosition()+60);
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()+70);
                 }
 
                 while (gamepad2.right_stick_x > 0.3) { //change to if statements

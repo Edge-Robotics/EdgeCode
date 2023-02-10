@@ -119,7 +119,7 @@ public class TeleV2_OnePlayer extends LinearOpMode {
 
                 if (gamepad1.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
-                    bottomPosition -= 5;
+                    bottomPosition += 0.2;
                 }
 
                 if (gamepad1.dpad_down) {
