@@ -48,7 +48,7 @@ public class TeleV1 extends LinearOpMode {
     double bottomPosition = 0;
     double slightPosition = 300;
     double midPosition = 2020;
-    double topPosition = 2765;
+    double topPosition = 2800;
     double cone1 = 400;
     double cone2 = 300;
     double cone3 = 200;
@@ -117,10 +117,35 @@ public class TeleV1 extends LinearOpMode {
                     backLeft.setPower(0);
                 }
 
+                if (gamepad1.dpad_up){ //dpad slow movement
+                    frontLeft.setPower(-0.3);
+                    frontRight.setPower(0.3);
+                    backRight.setPower(-0.3);
+                    backLeft.setPower(0.3);
+                }
+                if (gamepad1.dpad_right){
+                    frontLeft.setPower(-0.5);
+                    frontRight.setPower(-0.5);
+                    backRight.setPower(-0.5);
+                    backLeft.setPower(-0.5);
+                }
+                if (gamepad1.dpad_left){
+                    frontLeft.setPower(0.5);
+                    frontRight.setPower(0.5);
+                    backRight.setPower(0.5);
+                    backLeft.setPower(0.5);
+                }
+                if (gamepad1.dpad_down){
+                    frontLeft.setPower(0.3);
+                    frontRight.setPower(-0.3);
+                    backRight.setPower(0.3);
+                    backLeft.setPower(-0.3);
+                }
+
                 if (gamepad2.dpad_up) {
                     mainElevator.setTargetPosition(topPosition);
                     bottomPosition += 0.2;
-                    topPosition += 0.5;
+                    topPosition += 0.2;
                 }
 
                 if (gamepad2.dpad_down) {
@@ -145,20 +170,20 @@ public class TeleV1 extends LinearOpMode {
                 }
 
 
-                while (gamepad2.left_trigger > 0.3) { //change to if statements
-                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(75 * gamepad2.left_trigger));
+                if (gamepad2.left_trigger > 0.3) { //change to if statements
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()-(90 * gamepad2.left_trigger));
                 }
 
-                while (gamepad2.left_bumper) { //change to if statements
-                    mainElevator.setTargetPosition(elevator.getCurrentPosition()+70);
+                if (gamepad2.left_bumper) { //change to if statements
+                    mainElevator.setTargetPosition(elevator.getCurrentPosition()+90);
                 }
 
-                while (gamepad2.right_stick_x > 0.3) { //change to if statements
+                if (gamepad2.right_stick_x > 0.3) { //change to if statements
                     leftServo.setPosition(leftServo.getPosition() + 0.002);
                     rightServo.setPosition(rightServo.getPosition() - 0.002);
                 }
 
-                while (gamepad2.right_stick_x < -0.3) { //change to if statements
+                if (gamepad2.right_stick_x < -0.3) { //change to if statements
                     leftServo.setPosition(leftServo.getPosition() - 0.002);
                     rightServo.setPosition(rightServo.getPosition() + 0.002);
                 }
